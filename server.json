@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.smythmyke/markitup-mcp-server",
+  "description": "MarkItUp AI image annotation and marketing-visual generator (variations, outpaint, bg-removal).",
+  "version": "0.1.1",
+  "repository": {
+    "url": "https://github.com/smythmyke/markitup-mcp-server",
+    "source": "github"
+  },
+  "websiteUrl": "https://markitup.app",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "markitup-mcp-server",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "MARKITUP_API_KEY",
+          "description": "API key minted at https://markitup.app/dashboard/. Required.",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "MARKITUP_API_BASE",
+          "description": "Override the API base URL. Default: https://markitup.app/api/v1",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
