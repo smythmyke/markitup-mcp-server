@@ -1,13 +1,18 @@
 # markitup-mcp-server
 
+[![npm version](https://img.shields.io/npm/v/markitup-mcp-server.svg)](https://www.npmjs.com/package/markitup-mcp-server)
+[![MCP Registry](https://img.shields.io/badge/MCP%20Registry-active-2da44e)](https://registry.modelcontextprotocol.io/v0/servers?search=markitup)
+[![Glama](https://img.shields.io/badge/Glama-listed-blue)](https://glama.ai/mcp/servers/smythmyke/markitup-mcp-server)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 MCP (Model Context Protocol) server for [MarkItUp](https://markitup.app) — AI-powered image annotation and marketing-visual generation. Lets Claude Code, Claude Desktop, Cursor, ChatGPT-with-MCP, and other MCP-compatible clients call MarkItUp directly.
 
-> **Status:** v0.1.0 — pre-release. Five tools available: `markitup_credit_balance`, `markitup_generate`, `markitup_regen`, `markitup_extend`, `markitup_remove_background`.
+Five tools available: `markitup_credit_balance`, `markitup_generate`, `markitup_regen`, `markitup_extend`, `markitup_remove_background`.
 
 ## Prerequisites
 
 1. A MarkItUp account — sign up at https://markitup.app.
-2. A MarkItUp API key — generate one at https://markitup.app/dashboard/api-keys (coming soon — see Status).
+2. A MarkItUp API key — generate one at https://markitup.app/dashboard.
 3. Node.js 18 or newer (only if installing locally; `npx` doesn't require a local Node.js if your MCP client bundles one).
 
 ## Configure in Claude Code
@@ -141,7 +146,7 @@ npm run build
 ## Security
 
 - Never commit `MARKITUP_API_KEY` to source control.
-- If you accidentally expose a key, revoke it immediately at https://markitup.app/dashboard/api-keys and create a new one.
+- If you accidentally expose a key, revoke it immediately at https://markitup.app/dashboard and create a new one.
 - Keys are SHA-256 hashed on the server; the raw key is shown only once at creation.
 
 ## Errors
