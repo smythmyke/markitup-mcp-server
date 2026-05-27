@@ -1,0 +1,94 @@
+{
+  "manifest_version": "0.3",
+  "name": "markitup-mcp-server",
+  "display_name": "MarkItUp MCP Server",
+  "version": "0.1.1",
+  "description": "MCP server for MarkItUp — turn any screenshot into a polished marketing visual. 5 tools: generate variations, regenerate, AI outpaint for aspect-ratio changes, HD background removal, and credit-balance lookup.",
+  "long_description": "MCP (Model Context Protocol) server for [MarkItUp](https://markitup.app) — AI-powered image annotation and marketing-visual generation.\n\nLets Claude Code, Claude Desktop, Cursor, ChatGPT-with-MCP, and other MCP-compatible clients call MarkItUp directly. Powered by Claude analysis (text) + Gemini image generation.\n\n## Tools (5)\n\n- **markitup_credit_balance** — check credits + subscription status (free)\n- **markitup_generate** — create 3 marketing-visual variations from any image (1 credit)\n- **markitup_regen** — regenerate one variation from a previous call (1 credit)\n- **markitup_extend** — AI outpainting for aspect-ratio changes (1 credit)\n- **markitup_remove_background** — HD background removal via Photoroom (1 credit)\n\nGet your API key at https://markitup.app/dashboard/.",
+  "author": {
+    "name": "Michael Smyth",
+    "url": "https://github.com/smythmyke"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smythmyke/markitup-mcp-server"
+  },
+  "homepage": "https://markitup.app",
+  "documentation": "https://github.com/smythmyke/markitup-mcp-server#readme",
+  "support": "https://github.com/smythmyke/markitup-mcp-server/issues",
+  "icon": "icon.png",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "ai",
+    "image-annotation",
+    "marketing",
+    "screenshot",
+    "claude",
+    "gemini"
+  ],
+  "license": "MIT",
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18.0.0"
+    },
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ]
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {
+        "MARKITUP_API_KEY": "${user_config.MARKITUP_API_KEY}",
+        "MARKITUP_API_BASE": "${user_config.MARKITUP_API_BASE}"
+      }
+    }
+  },
+  "user_config": {
+    "MARKITUP_API_KEY": {
+      "type": "string",
+      "title": "MarkItUp API Key",
+      "description": "API key from your MarkItUp dashboard at https://markitup.app/dashboard/. Required.",
+      "sensitive": true,
+      "required": true
+    },
+    "MARKITUP_API_BASE": {
+      "type": "string",
+      "title": "API Base URL (optional)",
+      "description": "Override the API base URL. Default: https://markitup.app/api/v1",
+      "default": "https://markitup.app/api/v1",
+      "required": false
+    }
+  },
+  "tools": [
+    {
+      "name": "markitup_credit_balance",
+      "description": "Return the current MarkItUp credit balance and subscription status for the authenticated account. Use this before calling generation tools to verify the account has credits available."
+    },
+    {
+      "name": "markitup_generate",
+      "description": "Generate polished marketing-visual variations of a screenshot or image using the MarkItUp pipeline (Claude analyzes the image and writes copy; Gemini renders the visuals). Costs 1 credit. Provide the image either as a public URL (image_url) OR as a base64-encoded string (image_base64) — exactly one. Common template IDs: glassmorphic, clean_minimal, bold_marketing, dark_professional, documentation. Returns the generated images plus the marketing copy (headline, subhead) written by Claude."
+    },
+    {
+      "name": "markitup_regen",
+      "description": "Regenerate a single variation from a previous markitup_generate call with the same source image and template. Costs 1 credit if charge_credit=true. Pass back the source image (as URL or base64) AND the text analysis object returned in the previous generate's structuredContent.text — the regen uses the same headline/copy so visuals stay consistent. Use variation_index to choose which slot (0–2) to regenerate."
+    },
+    {
+      "name": "markitup_extend",
+      "description": "AI-outpaint an image to a larger canvas. Useful for converting a square asset to 16:9 or 9:16, or extending a tight crop. Costs 1 credit. Provide the source image as URL or base64, plus the target aspect ratio and pixel dimensions."
+    },
+    {
+      "name": "markitup_remove_background",
+      "description": "Remove the background from an image using Photoroom's HD AI background-removal service. Returns a transparent PNG. Costs 1 credit (free for active Pro/Power subscribers). Provide the source image as URL or base64."
+    }
+  ]
+}

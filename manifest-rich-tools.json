@@ -1,0 +1,195 @@
+[
+  {
+    "name": "markitup_credit_balance",
+    "description": "Return the current MarkItUp credit balance and subscription status for the authenticated account. Use this before calling generation tools to verify the account has credits available.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "markitup_generate",
+    "description": "Generate polished marketing-visual variations of a screenshot or image using the MarkItUp pipeline (Claude analyzes the image and writes copy; Gemini renders the visuals). Costs 1 credit. Provide the image either as a public URL (image_url) OR as a base64-encoded string (image_base64) — exactly one. Common template IDs: glassmorphic, clean_minimal, bold_marketing, dark_professional, documentation. Returns the generated images plus the marketing copy (headline, subhead) written by Claude.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "image_url": {
+          "type": "string",
+          "description": "Public HTTPS URL of the source image. Mutually exclusive with image_base64."
+        },
+        "image_base64": {
+          "type": "string",
+          "description": "Base64-encoded image bytes (no data: prefix). Mutually exclusive with image_url."
+        },
+        "image_mime_type": {
+          "type": "string",
+          "description": "MIME type when supplying image_base64. Defaults to image/png.",
+          "default": "image/png"
+        },
+        "description": {
+          "type": "string",
+          "description": "Natural-language description of what the image shows and what should be highlighted or emphasized."
+        },
+        "template_id": {
+          "type": "string",
+          "description": "Template ID controlling visual style. Standard options: glassmorphic, clean_minimal, bold_marketing, dark_professional, documentation."
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "description": "Optional. One of: 1:1, 3:2, 2:3, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9."
+        },
+        "image_size": {
+          "type": "string",
+          "enum": [
+            "1K",
+            "2K",
+            "4K"
+          ],
+          "description": "Optional output resolution tier. Defaults to backend choice."
+        }
+      },
+      "required": [
+        "description",
+        "template_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "markitup_regen",
+    "description": "Regenerate a single variation from a previous markitup_generate call with the same source image and template. Costs 1 credit if charge_credit=true. Pass back the source image (as URL or base64) AND the text analysis object returned in the previous generate's structuredContent.text — the regen uses the same headline/copy so visuals stay consistent. Use variation_index to choose which slot (0–2) to regenerate.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "source_image_url": {
+          "type": "string",
+          "description": "Public HTTPS URL of the same source image used in the original markitup_generate."
+        },
+        "source_image_base64": {
+          "type": "string",
+          "description": "Base64-encoded source image (no data: prefix). Mutually exclusive with source_image_url."
+        },
+        "source_image_mime_type": {
+          "type": "string",
+          "description": "MIME type when supplying source_image_base64. Defaults to image/png.",
+          "default": "image/png"
+        },
+        "template_id": {
+          "type": "string",
+          "description": "Same template_id used in the original generate."
+        },
+        "text_analysis": {
+          "type": "object",
+          "description": "The 'text' object from the previous generate's structuredContent — includes headline, subHeadline, marketingCopy.",
+          "properties": {
+            "headline": {
+              "type": "string"
+            },
+            "subHeadline": {
+              "type": "string"
+            },
+            "marketingCopy": {
+              "type": "string"
+            }
+          }
+        },
+        "variation_index": {
+          "type": "number",
+          "description": "Which slot (0, 1, or 2) to regenerate. Default 0.",
+          "default": 0
+        },
+        "aspect_ratio": {
+          "type": "string"
+        },
+        "image_size": {
+          "type": "string",
+          "enum": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "charge_credit": {
+          "type": "boolean",
+          "description": "If true, deduct 1 credit. Defaults to true.",
+          "default": true
+        }
+      },
+      "required": [
+        "template_id",
+        "text_analysis"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "markitup_extend",
+    "description": "AI-outpaint an image to a larger canvas. Useful for converting a square asset to 16:9 or 9:16, or extending a tight crop. Costs 1 credit. Provide the source image as URL or base64, plus the target aspect ratio and pixel dimensions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "image_url": {
+          "type": "string",
+          "description": "Public HTTPS URL of the source image."
+        },
+        "image_base64": {
+          "type": "string",
+          "description": "Base64-encoded source image (no data: prefix). Mutually exclusive with image_url."
+        },
+        "image_mime_type": {
+          "type": "string",
+          "default": "image/png"
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "description": "Target aspect ratio. One of: 1:1, 3:2, 2:3, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9."
+        },
+        "target_width": {
+          "type": "number",
+          "description": "Target output width in pixels."
+        },
+        "target_height": {
+          "type": "number",
+          "description": "Target output height in pixels."
+        },
+        "image_size": {
+          "type": "string",
+          "enum": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        }
+      },
+      "required": [
+        "aspect_ratio",
+        "target_width",
+        "target_height"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "markitup_remove_background",
+    "description": "Remove the background from an image using Photoroom's HD AI background-removal service. Returns a transparent PNG. Costs 1 credit (free for active Pro/Power subscribers). Provide the source image as URL or base64.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "image_url": {
+          "type": "string",
+          "description": "Public HTTPS URL of the source image."
+        },
+        "image_base64": {
+          "type": "string",
+          "description": "Base64-encoded source image (no data: prefix). Mutually exclusive with image_url."
+        },
+        "image_mime_type": {
+          "type": "string",
+          "default": "image/png"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]
