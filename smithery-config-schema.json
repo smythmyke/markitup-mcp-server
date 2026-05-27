@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "required": ["MARKITUP_API_KEY"],
+  "properties": {
+    "MARKITUP_API_KEY": {
+      "type": "string",
+      "title": "MarkItUp API Key",
+      "description": "API key from your MarkItUp dashboard at https://markitup.app/dashboard/. Required."
+    },
+    "MARKITUP_API_BASE": {
+      "type": "string",
+      "title": "API Base URL (optional)",
+      "description": "Override the API base URL. Default https://markitup.app/api/v1",
+      "default": "https://markitup.app/api/v1"
+    }
+  }
+}
