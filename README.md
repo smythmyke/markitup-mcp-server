@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/markitup-mcp-server.svg)](https://www.npmjs.com/package/markitup-mcp-server)
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-active-2da44e)](https://registry.modelcontextprotocol.io/v0/servers?search=markitup)
 [![Glama](https://img.shields.io/badge/Glama-listed-blue)](https://glama.ai/mcp/servers/smythmyke/markitup-mcp-server)
+[![smithery badge](https://smithery.ai/badge/smythmyke/markitup-mcp-server)](https://smithery.ai/servers/smythmyke/markitup-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 MCP (Model Context Protocol) server for [MarkItUp](https://markitup.app) — AI-powered image annotation and marketing-visual generation. Lets Claude Code, Claude Desktop, Cursor, ChatGPT-with-MCP, and other MCP-compatible clients call MarkItUp directly.
