@@ -1,6 +1,6 @@
 {
   "name": "markitup-mcp-server",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "mcpName": "io.github.smythmyke/markitup-mcp-server",
   "description": "MCP server for MarkItUp — AI image annotation and marketing visuals via Claude + Gemini",
   "license": "MIT",

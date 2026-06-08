@@ -26,7 +26,7 @@ export const extendTool = {
 } as const;
 
 interface ExtendBackendResponse {
-  imageDataUrl: string;
+  variation: string;
   width?: number;
   height?: number;
 }
@@ -73,7 +73,7 @@ export async function runExtend(
   const content: Array<TextContent | ImageContent> = [
     { type: "text", text: `Extended to ${data.width ?? targetWidth}x${data.height ?? targetHeight} (${aspectRatio}).` },
   ];
-  const parsed = parseDataUrl(data.imageDataUrl);
+  const parsed = parseDataUrl(data.variation);
   if (parsed) {
     content.push({ type: "image", data: parsed.data, mimeType: parsed.mimeType });
   }

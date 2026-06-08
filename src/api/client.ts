@@ -47,7 +47,7 @@ export class MarkItUpApiClient {
       headers: {
         "X-API-Key": this.apiKey,
         "Content-Type": "application/json",
-        "User-Agent": "markitup-mcp-server/0.1.0",
+        "User-Agent": "markitup-mcp-server/0.2.0",
       },
       body: body ? JSON.stringify(body) : undefined,
     });

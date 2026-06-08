@@ -12,9 +12,12 @@ import { generateTool, runGenerate } from "./tools/generate.js";
 import { regenTool, runRegen } from "./tools/regen.js";
 import { extendTool, runExtend } from "./tools/extend.js";
 import { bgremoveTool, runBgRemove } from "./tools/bgremove.js";
+import { upscaleTool, runUpscale } from "./tools/upscale.js";
+import { annotateTool, runAnnotate } from "./tools/annotate.js";
+import { uploadImageTool, runUploadImage } from "./tools/upload-image.js";
 
 const SERVER_NAME = "markitup";
-const SERVER_VERSION = "0.1.0";
+const SERVER_VERSION = "0.2.0";
 
 function readEnv(name: string, required = true): string {
   const value = process.env[name];
@@ -44,6 +47,9 @@ async function main(): Promise<void> {
     regenTool as unknown as Tool,
     extendTool as unknown as Tool,
     bgremoveTool as unknown as Tool,
+    upscaleTool as unknown as Tool,
+    annotateTool as unknown as Tool,
+    uploadImageTool as unknown as Tool,
   ];
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
@@ -62,6 +68,12 @@ async function main(): Promise<void> {
           return await runExtend(api, args ?? {});
         case bgremoveTool.name:
           return await runBgRemove(api, args ?? {});
+        case upscaleTool.name:
+          return await runUpscale(api, args ?? {});
+        case annotateTool.name:
+          return await runAnnotate(api, args ?? {});
+        case uploadImageTool.name:
+          return await runUploadImage(api, args ?? {});
         default:
           return errorResult(`Unknown tool: ${name}`);
       }
